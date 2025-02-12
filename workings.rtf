@@ -2,13 +2,13 @@
 \cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 CMUSerif-Roman;}
 {\colortbl;\red255\green255\blue255;}
 {\*\expandedcolortbl;;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww51000\viewh27180\viewkind0
+\paperw11900\paperh16840\margl1440\margr1440\vieww40760\viewh23980\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
-\f0\fs50 \cf0 LEBOWSKI \
+\f0\fs46 \cf0 LEBOWSKI \
 \'97\'97\'97\'97\'97\'97\
 
-\fs46 3-5 players\
+\fs40 3-5 players\
 Decks 1-2\
 \'97\'97\'96\'97\'97\'97\'97\
 Order of events:\
@@ -16,12 +16,45 @@ Order of events:\
 	- Decks of cards are shuffled.\
 	- Each player is dealt a hand consisting of the following: 3 known cards (in-hand), 3 unknown cards (face down)(off-hand), and 3 known cards (face up)(off-hand)\
 	- A random person is selected to go first.\
-	-\
+	- The player is allowed to play any card onto the discard pile. They must replenish their hand to at least 3 cards.\
+	- Play continues in a clockwise fashion.\
+	- The next player is allowed to play any legal move (see later section), which generally means playing a card of equal rank or higher onto the discard pile. The player also then replenishes their hand to 3 cards from the pick-up pile.\
+	- Play continues in this fashion until a player plays an illegal move, or cannot play a valid card, resulting in them picking up the discard pile and adding it to their in-hand.\
+	- If a player has 3 or more cards in their in-hand, they do not need to replenish. \
+	- Once all the cards in the player\'92s in-hand are played, and the replenish deck is empty, the player then starts playing from their off-hand. The same rules and general play continues as before, until the player\'92s known off-hand cards are out. Only then does the player start to play the unknown off-hand cards. If these are all played, that player is considered out of contention for being the loser (or considered the winner in some variations of the game).\
+	- The remaining players continue to play unit all but one is eliminated. This person is considered the loser.\
 \
-\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
 Deck size:\
 	There are 52 cards in a standard deck of cards, Jokers excluded. We know that for a game of Lebowski, each player will be initially dealt 9 cards.	If we want at least 14 cards in the pick-up pile (this number is arbitrary):\
 		52 - 14 = 38\
-		
-\fs44 38 \'f7 9 = 4.222 \
-	Hence, there should be 4 players for each deck in play. }
+		38 \'f7 9 = 4.222 \
+	Hence, there should be 4 players for each deck in play. \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Legal plays:\
+	In order for a card placed on another to be considered valid, it must be of equal or greater rank than the card it is placed on (except in the case of the 7 card being played).\
+	Certain cards have special abilities. These are:\
+		A: The highest card. Also allows the player to nominate another player to play next. This nomination can be the player himself, meaning he/she has another turn.\
+		2: Playable on anything. Also known as the \'93reset card\'94. Anything can be played on a 2 and a 2 can be played on anything.\
+		5: Glass card. When this card is played, the next player has to play on the card that sits below the 5 (or below a stack of 5\'92s). This card can also be played on any other card.\
+		7: Reverse card. The next player (and only the next player) has to play a rank equal to or lower than a 7.\
+		8: Skip card. The next player loses their turn. This is stackable, i.e. playing two 8\'92s skips the next 2 players.\
+		10: Burn card. The discard pile is removed, and the player that played the 10 card gets to play again. This card can NOT be played on any card and must be of higher rank than the previous card.\
+		Q: Direction switch card. The direction of play is reversed. Stacking Q cards allows for the direction of play to change accordingly, i.e. playing two Q\'92s has the same effect as playing none since direction is 			reversed twice.\
+	When four of the same rank cards are placed onto the discard pile, the pile is burned, and the player that played the 4th card gets to play again.]	\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+Features of the program:\
+	The user should be able to select the number of players. The other players are to be controlled by the computer and will have random plays for now.\
+	The user should be able to use the keyboard to play the cards in their hands (i.e. the user should be able to press 4 if there is a 4 in their hand in order to play it, or \'93A\'94 if there is an Ace).\
+	The user should be able to specify the number of each rank they want to play, since they are allowed to play multiple of the same rank.\
+	\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+		\
+		\
+}
