@@ -4,9 +4,9 @@ public class Lebowski {
  // VARIABLES
     LinkedList<Player> players;
     Random rand = new Random();
-    private final byte MAX_PLAYERS = 5;
-    private final byte MIN_PLAYERS = 3;
     public Deck deck;
+    private int currentPlayerIndex = 0;
+    private int directionOfPlay = 1;
 
     public Lebowski() {
         startGame();
@@ -15,7 +15,8 @@ public class Lebowski {
     public void startGame() {
         System.out.println("Welcome to the Lebowski!");
         createDeck(); // produces a shuffled deck
-        determinePlayers();
+        determinePlayers(); // creates players and deals them their cards
+        play();
     }
 
     private void createDeck() {
@@ -30,6 +31,8 @@ public class Lebowski {
             System.out.println("How many players will be playing? >> ");
             try {
                 numPlayers = input.nextInt();
+                final byte MAX_PLAYERS = 5;
+                final byte MIN_PLAYERS = 3;
                 if (numPlayers <= MAX_PLAYERS && numPlayers >= MIN_PLAYERS){
                     break;
                 } else {
@@ -40,13 +43,10 @@ public class Lebowski {
                 input.next();
             }
         }
+        input.close();
         players = new LinkedList<>();
 
         for (int i = 0; i < numPlayers; i++) {
-            /* TODO: Deal each player an in-hand using the first 3 cards from the shuffled deck
-               TODO: Deal each player an off-hand using the next 6 cards from the shuffled deck
-               TODO: The last player needs to point to the first player
-             */
             players.add(new Player("Player " + (i+1)));
             // deal hands
             for (int j = 0; j < 3; j++) {
@@ -63,4 +63,48 @@ public class Lebowski {
 
         System.out.println("Remaining deck: " + deck.toString());
     }
+
+    private void play() {
+        currentPlayerIndex = rand.nextInt(players.size()); // set random index to go first
+        // Game loop
+        Player currentPlayer = getCurrentPlayer(); // select a random player to go first
+        System.out.println(currentPlayer.getName() + "'s turn");
+        nextTurn();
+        currentPlayer = getCurrentPlayer(); // select a random player to go first
+        System.out.println(currentPlayer.getName() + "'s turn");
+        nextTurn();
+        currentPlayer = getCurrentPlayer(); // select a random player to go first
+        System.out.println(currentPlayer.getName() + "'s turn");
+        nextTurn();
+        currentPlayer = getCurrentPlayer(); // select a random player to go first
+        System.out.println(currentPlayer.getName() + "'s turn");
+
+        reverseDirection();
+        nextTurn();
+        currentPlayer = getCurrentPlayer(); // select a random player to go first
+        System.out.println(currentPlayer.getName() + "'s turn");
+        nextTurn();
+        currentPlayer = getCurrentPlayer(); // select a random player to go first
+        System.out.println(currentPlayer.getName() + "'s turn");
+        nextTurn();
+        currentPlayer = getCurrentPlayer(); // select a random player to go first
+        System.out.println(currentPlayer.getName() + "'s turn");
+        nextTurn();
+        currentPlayer = getCurrentPlayer(); // select a random player to go first
+        System.out.println(currentPlayer.getName() + "'s turn");
+
+    }
+
+    public void nextTurn(){
+        currentPlayerIndex = (currentPlayerIndex + directionOfPlay + players.size()) % players.size();
+    }
+
+    public void reverseDirection(){
+        directionOfPlay *= -1;
+    }
+
+    public Player getCurrentPlayer(){
+        return players.get(currentPlayerIndex);
+    }
+
 }
