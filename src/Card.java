@@ -1,6 +1,6 @@
 public class Card {
-    String value;
-    String suit;
+    private String value;
+    private String suit;
 
     public Card(String value, String suit){
         this.value = value;

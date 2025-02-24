@@ -80,6 +80,14 @@ public class Lebowski {
                         String cardString = input.next().trim(); // removes spacing in input
                         // use helper function
                         cardSelected = currentPlayer.getCardFromHand(cardString, currentPlayer.inHand);
+                        int cardRank = Integer.parseInt(cardSelected.getValue()); // get rank and store as integer
+                        // TODO: Handle case where rank may be > 10 (royal cards)
+                        if (currentPlayer.getNumRankedCards(currentPlayer.inHand, cardRank) > 1){
+                            System.out.println("Multiple cards of rank " + cardRank + "found");
+                        }
+
+                        // TODO: Call function to perform special actions for certain cards
+
 
                         if (cardSelected == null){
                             System.out.println("Please enter a valid card from your hand.");
@@ -88,6 +96,8 @@ public class Lebowski {
                     System.out.println("Your selected card: " + cardSelected);
                     currentPlayer.playFromHand(cardSelected, currentPlayer.inHand);
                     discardPile.addCard(cardSelected); // add played card on top of the discard pile
+                    System.out.println(discardPile);
+                    System.out.println(deck);
 
                     // Replenish hand if necessary
                     if (!currentPlayer.checkInHand()) {
@@ -123,6 +133,7 @@ public class Lebowski {
     }
 
     public void reverseDirection(){
+        // used when Queen is played onto discard pile
         directionOfPlay *= -1;
     }
 

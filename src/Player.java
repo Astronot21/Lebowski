@@ -64,4 +64,14 @@ public class Player {
     public boolean checkInHand(){
         return this.inHand.size() >= 3;
     }
+
+    public int getNumRankedCards(ArrayList<Card> hand, int rank){
+        int count = 0;
+        for (Card card : hand){
+            if (Integer.parseInt(card.getValue()) == rank){
+                count++;
+            }
+        }
+        return count;
+    }
 }

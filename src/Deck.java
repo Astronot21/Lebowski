@@ -42,6 +42,6 @@ public class Deck {
 
     @Override
     public String toString(){
-        return deck.toString();
+        return "Deck is " + deck.toString();
     }
 }

@@ -21,4 +21,9 @@ public class DiscardPile{
         // used to give the top card to the player as punishment when applicable
         return this.pile.peek();
     }
+
+    @Override
+    public String toString(){
+        return "DiscardPile = " + pile;
+    }
 }
