@@ -68,7 +68,7 @@ public class Player {
     public int getNumRankedCards(ArrayList<Card> hand, int rank){
         int count = 0;
         for (Card card : hand){
-            if (Integer.parseInt(card.getValue()) == rank){
+            if (card.getValue() == rank){
                 count++;
             }
         }

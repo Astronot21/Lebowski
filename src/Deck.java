@@ -11,17 +11,12 @@ public class Deck {
     }
 
     private void initialiseDeck(){
-        String[] suits = {"H", "C", "D", "S"};
-        String[] values = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-
         // Create ordered deck
-        for (String suit : suits) {
-            for (String value : values) {
-                Card card = new Card(value, suit);
-                deck.add(card);
-            }
-        }
-//        System.out.println("The deck is " + deck);
+       for (Card.Suit suit : Card.Suit.values()) {
+           for (Card.Rank rank : Card.Rank.values()) {
+               deck.push(new Card(rank, suit));
+           }
+       }
     }
 
     private void shuffleDeck(){

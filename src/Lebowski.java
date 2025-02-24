@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Lebowski {
- // VARIABLES
+    // VARIABLES
     LinkedList<Player> players;
     Random rand = new Random();
     public Deck deck;
@@ -9,12 +9,19 @@ public class Lebowski {
     private int directionOfPlay = 1;
     Scanner input = new Scanner(System.in);
 
+    // Used for text coloring
+    String RESET = "\u001B[0m";
+    String RED = "\u001B[31m";
+    String GREEN = "\u001B[32m";
+    String YELLOW = "\u001B[33m";
+
+
     public Lebowski() {
         startGame();
     }
 
     public void startGame() {
-        System.out.println("Welcome to the Lebowski!");
+        System.out.println(GREEN + "Welcome to the Lebowski!" + RESET);
         createDeck(); // produces a shuffled deck
         determinePlayers(); // creates players and deals them their cards
         play();
@@ -40,7 +47,7 @@ public class Lebowski {
                     System.out.println("Player count must be between " + MIN_PLAYERS + " and " + MAX_PLAYERS);
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter an integer number of players.");
+                System.out.println(RED + "Invalid input. Please enter an integer number of players." + RESET);
                 input.next();
             }
         }
@@ -77,13 +84,14 @@ public class Lebowski {
                     Card cardSelected = null;
                     while (cardSelected == null) {
                         System.out.println("Which card would you like to play?");
+                        // TODO: Handle misinputs from user (ex. making a typo)
                         String cardString = input.next().trim(); // removes spacing in input
-                        // use helper function
                         cardSelected = currentPlayer.getCardFromHand(cardString, currentPlayer.inHand);
-                        int cardRank = Integer.parseInt(cardSelected.getValue()); // get rank and store as integer
-                        // TODO: Handle case where rank may be > 10 (royal cards)
-                        if (currentPlayer.getNumRankedCards(currentPlayer.inHand, cardRank) > 1){
-                            System.out.println("Multiple cards of rank " + cardRank + "found");
+
+                        int cardRank = cardSelected.getValue();
+                        if (currentPlayer.getNumRankedCards(currentPlayer.inHand, cardRank) > 1) {
+                            System.out.println(YELLOW + "Multiple cards of rank " + cardRank + " found" + RESET);
+                            // TODO: Ask user how many they want to play from that rank
                         }
 
                         // TODO: Call function to perform special actions for certain cards
@@ -93,7 +101,10 @@ public class Lebowski {
                             System.out.println("Please enter a valid card from your hand.");
                         }
                     }
-                    System.out.println("Your selected card: " + cardSelected);
+                    System.out.println(GREEN + "Your selected card: " + cardSelected + RESET);
+
+                    // TODO: Check if card can be played on discard pile (must be of higher rank than top card)
+
                     currentPlayer.playFromHand(cardSelected, currentPlayer.inHand);
                     discardPile.addCard(cardSelected); // add played card on top of the discard pile
                     System.out.println(discardPile);
@@ -103,7 +114,8 @@ public class Lebowski {
                     if (!currentPlayer.checkInHand()) {
                         if (!deck.isEmpty()) {
                             for (int i = 1; i <= (3 - currentPlayer.inHand.size()); i++) {
-                                System.out.println("Card from deck added to hand");
+                                System.out.println(GREEN + "Card from deck added to hand" + RESET);
+                                System.out.println();
                                 currentPlayer.inHand.add(deck.drawCard()); // add top card from deck to player hand
                             }
                         } else {
