@@ -18,6 +18,7 @@ public class DiscardPile{
     }
 
     public Card getTopCard(){
+        // used to give the top card to the player as punishment when applicable
         return this.pile.peek();
     }
 }

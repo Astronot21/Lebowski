@@ -41,7 +41,7 @@ public class Player {
     }
 
     public boolean canPlayFromFaceUpHand(){
-        return inHand.isEmpty() && offHand_fu.isEmpty() && !offHand_fd.isEmpty();
+        return inHand.isEmpty() && !offHand_fu.isEmpty();
     }
 
     public String getName(){
@@ -61,4 +61,7 @@ public class Player {
         hand.remove(card);
     }
 
+    public boolean checkInHand(){
+        return this.inHand.size() >= 3;
+    }
 }

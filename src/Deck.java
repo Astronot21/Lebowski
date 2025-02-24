@@ -36,6 +36,10 @@ public class Deck {
         return deck.pop();
     }
 
+    public boolean isEmpty(){
+        return deck.isEmpty();
+    }
+
     @Override
     public String toString(){
         return deck.toString();

@@ -65,12 +65,11 @@ public class Lebowski {
     }
 
     private void play() {
-
         currentPlayerIndex = rand.nextInt(players.size()); // set random index to go first
-        // Game loop
         Player currentPlayer = players.get(currentPlayerIndex); // get first random player
+        DiscardPile discardPile = new DiscardPile();
 
-        // Check if it is the user's turn to play
+        // Start game loop
         while (true) {
             if (currentPlayerIndex == 0) {
                 if (currentPlayer.canPlayFromInHand()){
@@ -88,6 +87,22 @@ public class Lebowski {
                     }
                     System.out.println("Your selected card: " + cardSelected);
                     currentPlayer.playFromHand(cardSelected, currentPlayer.inHand);
+                    discardPile.addCard(cardSelected); // add played card on top of the discard pile
+
+                    // Replenish hand if necessary
+                    if (!currentPlayer.checkInHand()) {
+                        if (!deck.isEmpty()) {
+                            for (int i = 1; i <= (3 - currentPlayer.inHand.size()); i++) {
+                                System.out.println("Card from deck added to hand");
+                                currentPlayer.inHand.add(deck.drawCard()); // add top card from deck to player hand
+                            }
+                        } else {
+                            System.out.println("Deck is empty.");
+                        }
+                    } else {
+                        System.out.println("Player hand already contains 3 or more cards");
+                    }
+
                 } else if (currentPlayer.canPlayFromFaceUpHand()){
                     // TODO: Add similar logic to play from off hand (face up cards)
                     System.out.println(currentPlayer.showOffHandFaceUp());
@@ -97,12 +112,10 @@ public class Lebowski {
                 }
             } else {
                 System.out.println("Computer's turn");
+                // TODO: Add logic for AI to play, similar to player, except without input
             }
-
             nextTurn();
         } // end game loop
-
-//        input.close();
     }
 
     public void nextTurn(){
