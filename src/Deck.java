@@ -21,12 +21,12 @@ public class Deck {
                 deck.add(card);
             }
         }
-        System.out.println("The deck is " + deck);
+//        System.out.println("The deck is " + deck);
     }
 
     private void shuffleDeck(){
         Collections.shuffle(deck);
-        System.out.println("The shuffled deck is " + deck);
+//        System.out.println("The shuffled deck is " + deck);
     }
 
     public Card drawCard(){

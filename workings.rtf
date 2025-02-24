@@ -6,12 +6,18 @@
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
 \f0\fs46 \cf0 LEBOWSKI \
-\'97\'97\'97\'97\'97\'97\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
-\fs40 3-5 players\
+\fs40 \cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97
+\fs46 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs40 \cf0 3-5 players\
 Decks 1-2\
-\'97\'97\'96\'97\'97\'97\'97\
-Order of events:\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Order of events:\
 	- The number of players is determined. Each player will get 9 cards, so in a deck of 52 cards (jokers excluded), a single deck is used when there are less than 5 players (see later section for more details). \
 	- Decks of cards are shuffled.\
 	- Each player is dealt a hand consisting of the following: 3 known cards (in-hand), 3 unknown cards (face down)(off-hand), and 3 known cards (face up)(off-hand)\
@@ -25,16 +31,26 @@ Order of events:\
 	- The remaining players continue to play unit all but one is eliminated. This person is considered the loser.\
 \
 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
-Deck size:\
+Player\'92s actions:\
+	- The player is shown the cards in their in-hand each time it is their turn\
+	- The player can then enter the code for the card they which to play into the console\
+		- If this card is in their hand, the card is played onto the discard pile. The user is prompted until valid input has been entered.\
+		- If the card is in their hand, but is an illegal play, then the cards on the pile are placed into the player\'92s in-hand\
+		- If the player has multiple cards of the same rank in their hand, the player then enters the number of cards they wish to add to the discard pile. \
+	- Play then continues to the next player, which is controlled by the computer. It follows the same logic and gameplay, but is not controlled by the player. It is assumed here that the computer will always play a valid move (even 		though it may be bad strategy)\
+	- When the player has finished their in-hand, and there are no more cards in the deck, the player is allowed to pay from their off-hand face up cards. When this is also done, the player is allowed to play from their off-hand face 		down cards.\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 Deck size:\
 	There are 52 cards in a standard deck of cards, Jokers excluded. We know that for a game of Lebowski, each player will be initially dealt 9 cards.	If we want at least 14 cards in the pick-up pile (this number is arbitrary):\
 		52 - 14 = 38\
 		38 \'f7 9 = 4.222 \
 	Hence, there should be 4 players for each deck in play. \
 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 Legal plays:\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+Legal plays:\
 	In order for a card placed on another to be considered valid, it must be of equal or greater rank than the card it is placed on (except in the case of the 7 card being played).\
 	Certain cards have special abilities. These are:\
 		A: The highest card. Also allows the player to nominate another player to play next. This nomination can be the player himself, meaning he/she has another turn.\
@@ -45,16 +61,16 @@ Deck size:\
 		10: Burn card. The discard pile is removed, and the player that played the 10 card gets to play again. This card can NOT be played on any card and must be of higher rank than the previous card.\
 		Q: Direction switch card. The direction of play is reversed. Stacking Q cards allows for the direction of play to change accordingly, i.e. playing two Q\'92s has the same effect as playing none since direction is 			reversed twice.\
 	When four of the same rank cards are placed onto the discard pile, the pile is burned, and the player that played the 4th card gets to play again.]	\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 \'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
 Features of the program:\
 	The user should be able to select the number of players. The other players are to be controlled by the computer and will have random plays for now.\
 	The user should be able to use the keyboard to play the cards in their hands (i.e. the user should be able to press 4 if there is a 4 in their hand in order to play it, or \'93A\'94 if there is an Ace).\
 	The user should be able to specify the number of each rank they want to play, since they are allowed to play multiple of the same rank.\
 	\
 \
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 \
+\
+\
+\
 		\
 		\
 }

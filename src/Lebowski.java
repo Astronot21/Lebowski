@@ -7,6 +7,7 @@ public class Lebowski {
     public Deck deck;
     private int currentPlayerIndex = 0;
     private int directionOfPlay = 1;
+    Scanner input = new Scanner(System.in);
 
     public Lebowski() {
         startGame();
@@ -43,7 +44,6 @@ public class Lebowski {
                 input.next();
             }
         }
-        input.close();
         players = new LinkedList<>();
 
         for (int i = 0; i < numPlayers; i++) {
@@ -56,43 +56,53 @@ public class Lebowski {
             }
         }
 
-        System.out.println("==============");
-        System.out.println("PLAYERS");
-        System.out.println("==============");
-        System.out.println(players);
-
-        System.out.println("Remaining deck: " + deck.toString());
+//        System.out.println("==============");
+//        System.out.println("PLAYERS");
+//        System.out.println("==============");
+//        System.out.println(players);
+//
+//        System.out.println("Remaining deck: " + deck.toString());
     }
 
     private void play() {
+
         currentPlayerIndex = rand.nextInt(players.size()); // set random index to go first
         // Game loop
-        Player currentPlayer = getCurrentPlayer(); // select a random player to go first
-        System.out.println(currentPlayer.getName() + "'s turn");
-        nextTurn();
-        currentPlayer = getCurrentPlayer(); // select a random player to go first
-        System.out.println(currentPlayer.getName() + "'s turn");
-        nextTurn();
-        currentPlayer = getCurrentPlayer(); // select a random player to go first
-        System.out.println(currentPlayer.getName() + "'s turn");
-        nextTurn();
-        currentPlayer = getCurrentPlayer(); // select a random player to go first
-        System.out.println(currentPlayer.getName() + "'s turn");
+        Player currentPlayer = players.get(currentPlayerIndex); // get first random player
 
-        reverseDirection();
-        nextTurn();
-        currentPlayer = getCurrentPlayer(); // select a random player to go first
-        System.out.println(currentPlayer.getName() + "'s turn");
-        nextTurn();
-        currentPlayer = getCurrentPlayer(); // select a random player to go first
-        System.out.println(currentPlayer.getName() + "'s turn");
-        nextTurn();
-        currentPlayer = getCurrentPlayer(); // select a random player to go first
-        System.out.println(currentPlayer.getName() + "'s turn");
-        nextTurn();
-        currentPlayer = getCurrentPlayer(); // select a random player to go first
-        System.out.println(currentPlayer.getName() + "'s turn");
+        // Check if it is the user's turn to play
+        while (true) {
+            if (currentPlayerIndex == 0) {
+                if (currentPlayer.canPlayFromInHand()){
+                    System.out.println("Your in-hand is: " + currentPlayer.showInHand());
+                    Card cardSelected = null;
+                    while (cardSelected == null) {
+                        System.out.println("Which card would you like to play?");
+                        String cardString = input.next().trim(); // removes spacing in input
+                        // use helper function
+                        cardSelected = currentPlayer.getCardFromHand(cardString, currentPlayer.inHand);
 
+                        if (cardSelected == null){
+                            System.out.println("Please enter a valid card from your hand.");
+                        }
+                    }
+                    System.out.println("Your selected card: " + cardSelected);
+                    currentPlayer.playFromHand(cardSelected, currentPlayer.inHand);
+                } else if (currentPlayer.canPlayFromFaceUpHand()){
+                    // TODO: Add similar logic to play from off hand (face up cards)
+                    System.out.println(currentPlayer.showOffHandFaceUp());
+                } else if (currentPlayer.canPlayFromFaceDownHand()){
+                    System.out.println(currentPlayer.showOffHandFaceDown());
+                    // TODO: Add similar logic to play from off hand (face down cards)
+                }
+            } else {
+                System.out.println("Computer's turn");
+            }
+
+            nextTurn();
+        } // end game loop
+
+//        input.close();
     }
 
     public void nextTurn(){

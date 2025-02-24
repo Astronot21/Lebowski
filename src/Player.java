@@ -20,6 +20,18 @@ public class Player {
         return "Name: " + this.name + "\nIn-hand: " + inHand + "\nOff-hand: " + offHand_fu + "\nOff-hand: " + offHand_fd + "\n";
     }
 
+    public String showInHand(){
+        return this.inHand.toString();
+    }
+
+    public String showOffHandFaceUp(){
+        return this.offHand_fu.toString();
+    }
+
+    public String showOffHandFaceDown(){
+        return this.offHand_fd.toString();
+    }
+
     public boolean canPlayFromInHand(){
         return !this.inHand.isEmpty();
     }
@@ -34,6 +46,19 @@ public class Player {
 
     public String getName(){
         return this.name;
+    }
+
+    public Card getCardFromHand(String cardName, ArrayList<Card> hand){
+        for (Card card : hand){
+            if (card.toString().equalsIgnoreCase(cardName)){
+                return card;
+            }
+        }
+        return null;
+    }
+
+    public void playFromHand(Card card, ArrayList<Card> hand){
+        hand.remove(card);
     }
 
 }
