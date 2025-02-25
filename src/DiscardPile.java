@@ -3,7 +3,7 @@ import java.util.Stack;
 
 
 public class DiscardPile{
-    private Stack<Card> pile;
+    public Stack<Card> pile;
 
     public DiscardPile(){
         this.pile = new Stack<>();
@@ -25,5 +25,9 @@ public class DiscardPile{
     @Override
     public String toString(){
         return "DiscardPile = " + pile;
+    }
+
+    public int getPileSize(){
+        return this.pile.size();
     }
 }
