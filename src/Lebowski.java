@@ -62,13 +62,6 @@ public class Lebowski {
                 players.get(i).offHand_fu.add(deck.drawCard());
             }
         }
-
-//        System.out.println("==============");
-//        System.out.println("PLAYERS");
-//        System.out.println("==============");
-//        System.out.println(players);
-//
-//        System.out.println("Remaining deck: " + deck.toString());
     }
 
     private void play() {
@@ -80,11 +73,15 @@ public class Lebowski {
         Player currentPlayer = players.get(currentPlayerIndex); // get first random player
             if (currentPlayerIndex == 0) {
                 if (currentPlayer.canPlayFromInHand()){
-                    System.out.println("Your in-hand is: " + currentPlayer.showInHand());
+                    System.out.println("\nYour in-hand is: " + currentPlayer.showInHand());
                     Card cardSelected = null;
                     while (cardSelected == null) {
                         System.out.println("Which card would you like to play?");
                         String cardString = input.next().trim(); // removes spacing in input
+                        if (cardString.equalsIgnoreCase("Q")){
+                            System.out.println(RED + "EXITING..." + RESET);
+                            System.exit(0);
+                        }
                         cardSelected = currentPlayer.getCardFromHand(cardString, currentPlayer.inHand);
                         if (cardSelected == null) {
                             System.out.println(RED + "Please enter a valid card from your hand." + RESET);
@@ -124,8 +121,7 @@ public class Lebowski {
                     // TODO: Add similar logic to play from off hand (face down cards)
                 }
             } else {
-                System.out.println("\nComputer's turn");
-                System.out.println(currentPlayer);
+                System.out.println("\n" + currentPlayer);
                 if (currentPlayer.canPlayFromInHand()){
                     System.out.println(YELLOW + "CPU to play from in-hand" + RESET);
                     Card cardSelected = currentPlayer.inHand.get(rand.nextInt(currentPlayer.inHand.size()));
@@ -170,11 +166,48 @@ public class Lebowski {
     }
 
     private boolean checkValidPlay(Card playedCard, DiscardPile discardPile) {
+        boolean valid = false;
         // Determines if the card that is to be played has a rank that is valid based on the discard pile given (higher rank except in the case of a 7)
-        if (discardPile.getPileSize() == 0){
-            return true; // since anything can be played on an empty discard pile
+
+        if (playedCard.getValue() < discardPile.getTopCard().getValue()) return false;
+        else {
+
+            if (discardPile.getPileSize() == 0) {
+                return true; // since anything can be played on an empty discard pile
+            }
+            switch (playedCard.getValue()) {
+                case 2:
+                    // RESET CARD
+                    System.out.println("Reset card played");
+                    return true;
+                case 5:
+                    // TODO: Add "glass" card
+                    System.out.println("Glass card played");
+                    return true;
+                case 7:
+                    // TODO: Expect lower card from next player
+                    System.out.println("Low card played");
+                    return true;
+                case 8:
+                    // TODO: Skip next player for as many of the cards played
+                    nextTurn();
+                    System.out.println("Skip card played");
+                    return true;
+                case 10:
+                    // TODO: Burn discard pile
+                    System.out.println("Burn card played");
+                    return true;
+                case 12:
+                    // QUEEN
+                    // TODO: Reverse direction for as many times as there are cards played
+                    System.out.println("Reverse card played");
+                    reverseDirection();
+                    return true;
+                default:
+                    // ANY OTHER CARD
+                    return true;
+            }
         }
-        return (playedCard.getValue() >= discardPile.getTopCard().getValue());
     }
 
     public void replenish(Player currentPlayer) {
