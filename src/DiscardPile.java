@@ -3,7 +3,7 @@ import java.util.Stack;
 
 
 public class DiscardPile{
-    public Stack<Card> pile;
+    private Stack<Card> pile;
 
     public DiscardPile(){
         this.pile = new Stack<>();

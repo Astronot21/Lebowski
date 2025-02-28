@@ -44,7 +44,7 @@ public class Lebowski {
                 if (numPlayers <= MAX_PLAYERS && numPlayers >= MIN_PLAYERS){
                     break;
                 } else {
-                    System.out.println("Player count must be between " + MIN_PLAYERS + " and " + MAX_PLAYERS);
+                    System.out.println(RED + "Player count must be between " + MIN_PLAYERS + " and " + MAX_PLAYERS + RESET);
                 }
             } catch (InputMismatchException e) {
                 System.out.println(RED + "Invalid input. Please enter an integer number of players." + RESET);
@@ -73,11 +73,11 @@ public class Lebowski {
 
     private void play() {
         currentPlayerIndex = rand.nextInt(players.size()); // set random index to go first
-        Player currentPlayer = players.get(currentPlayerIndex); // get first random player
         DiscardPile discardPile = new DiscardPile();
 
         // Start game loop
         while (true) {
+        Player currentPlayer = players.get(currentPlayerIndex); // get first random player
             if (currentPlayerIndex == 0) {
                 if (currentPlayer.canPlayFromInHand()){
                     System.out.println("Your in-hand is: " + currentPlayer.showInHand());
@@ -100,12 +100,10 @@ public class Lebowski {
                     }
                     System.out.println(GREEN + "Your selected card: " + cardSelected + RESET);
 
-
-                    if (discardPile.pile.isEmpty() || cardSelected.getValue() >= discardPile.getTopCard().getValue()) {
+                    if (checkValidPlay(cardSelected, discardPile)) {
                         currentPlayer.playFromHand(cardSelected, currentPlayer.inHand);
                         discardPile.addCard(cardSelected); // add played card on top of the discard pile
                         System.out.println(discardPile);
-                        System.out.println(deck);
                     } else {
                         System.out.println(RED + "Must play a card of higher rank!" + RESET);
                         // Adds current discard pile to player hand, since they made a mistake
@@ -116,30 +114,43 @@ public class Lebowski {
                     }
 
                     // Replenish hand if necessary
-                    if (!currentPlayer.checkInHand()) {
-                        if (!deck.isEmpty()) {
-                            for (int i = 1; i <= (3 - currentPlayer.inHand.size()); i++) {
-                                System.out.println(GREEN + "Card from deck added to hand" + RESET);
-                                System.out.println();
-                                currentPlayer.inHand.add(deck.drawCard()); // add top card from deck to player hand
-                            }
-                        } else {
-                            System.out.println("Deck is empty.");
-                        }
-                    } else {
-                        System.out.println(YELLOW + "Player hand already contains 3 or more cards" + RESET);
-                    }
+                   replenish(currentPlayer);
 
                 } else if (currentPlayer.canPlayFromFaceUpHand()){
-                    // TODO: Add similar logic to play from off hand (face up cards)
                     System.out.println(currentPlayer.showOffHandFaceUp());
+                    // TODO: Add similar logic to play from off hand (face up cards)
                 } else if (currentPlayer.canPlayFromFaceDownHand()){
                     System.out.println(currentPlayer.showOffHandFaceDown());
                     // TODO: Add similar logic to play from off hand (face down cards)
                 }
             } else {
-                System.out.println("Computer's turn");
-                // TODO: Add logic for AI to play, similar to player, except without input
+                System.out.println("\nComputer's turn");
+                System.out.println(currentPlayer);
+                if (currentPlayer.canPlayFromInHand()){
+                    System.out.println(YELLOW + "CPU to play from in-hand" + RESET);
+                    Card cardSelected = currentPlayer.inHand.get(rand.nextInt(currentPlayer.inHand.size()));
+                    System.out.println("Card selected: " + cardSelected);
+                    if (checkValidPlay(cardSelected, discardPile)) {
+                        currentPlayer.playFromHand(cardSelected, currentPlayer.inHand); // remove card from hand
+                        discardPile.addCard(cardSelected); // add card to top of discard pile
+                        System.out.println(discardPile); // show new discard pile
+                    }
+                    else{
+                        System.out.println(RED + "CPU played card of lower rank." + RESET);
+                        for (int i = 0; i <= discardPile.getPileSize(); i++){
+                            currentPlayer.inHand.add(discardPile.removeCard());
+                        }
+                        System.out.println(YELLOW + "Discard pile emptied" + RESET);
+                    }
+
+                    // Replenish hand if necessary
+                    replenish(currentPlayer);
+
+                } else if (currentPlayer.canPlayFromFaceUpHand()){
+                    System.out.println(YELLOW + "CPU to play from face up" + RESET);
+                } else if (currentPlayer.canPlayFromFaceDownHand()){
+                    System.out.println(YELLOW + "CPU to play from face down" + RESET);
+                }
             }
             nextTurn();
         } // end game loop
@@ -158,4 +169,28 @@ public class Lebowski {
         return players.get(currentPlayerIndex);
     }
 
+    private boolean checkValidPlay(Card playedCard, DiscardPile discardPile) {
+        // Determines if the card that is to be played has a rank that is valid based on the discard pile given (higher rank except in the case of a 7)
+        if (discardPile.getPileSize() == 0){
+            return true; // since anything can be played on an empty discard pile
+        }
+        return (playedCard.getValue() >= discardPile.getTopCard().getValue());
+    }
+
+    public void replenish(Player currentPlayer) {
+        // Check if in-hand already has 3 or more cards
+        if (!currentPlayer.checkInHand()) {
+            if (!deck.isEmpty()) {
+                for (int i = 1; i <= (3 - currentPlayer.inHand.size()); i++) {
+                    System.out.println(GREEN + "Card from deck added to hand" + RESET);
+                    currentPlayer.inHand.add(deck.drawCard()); // add top card from deck to player hand
+                }
+            } else {
+                System.out.println("Deck is empty.");
+            }
+        } else {
+            System.out.println(YELLOW + "Player hand already contains 3 or more cards" + RESET);
+        }
+        System.out.println("New in-hand: " + currentPlayer.showInHand());
+    }
 }
