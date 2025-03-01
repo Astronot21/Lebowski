@@ -30,4 +30,8 @@ public class DiscardPile{
     public int getPileSize(){
         return this.pile.size();
     }
+
+    public void clearPile(){
+        this.pile.clear();
+    }
 }

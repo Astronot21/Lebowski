@@ -88,13 +88,12 @@ public class Lebowski {
                         }
                     }
 
-                    // TODO: Call function to perform special actions for certain cards
-
                     int cardRank = cardSelected.getValue();
                     if (currentPlayer.getNumRankedCards(currentPlayer.inHand, cardRank) > 1) {
                         System.out.println(YELLOW + "Multiple cards of rank " + cardRank + " found" + RESET);
                         // TODO: Ask user how many they want to play from that rank
                     }
+
                     System.out.println(GREEN + "Your selected card: " + cardSelected + RESET);
 
                     if (checkValidPlay(cardSelected, discardPile)) {
@@ -166,20 +165,18 @@ public class Lebowski {
     }
 
     private boolean checkValidPlay(Card playedCard, DiscardPile discardPile) {
-        boolean valid = false;
         // Determines if the card that is to be played has a rank that is valid based on the discard pile given (higher rank except in the case of a 7)
+        boolean emptyPile = false;
+        int cardValue = playedCard.getValue();
 
-        if (playedCard.getValue() < discardPile.getTopCard().getValue()) return false;
-        else {
+        if (discardPile.getPileSize() == 0) {
+            emptyPile = true;
+        }
 
-            if (discardPile.getPileSize() == 0) {
-                return true; // since anything can be played on an empty discard pile
-            }
-            switch (playedCard.getValue()) {
-                case 2:
-                    // RESET CARD
-                    System.out.println("Reset card played");
-                    return true;
+        if (cardValue == 2) return true;
+
+        if (emptyPile || cardValue >= discardPile.getTopCard().getValue()) {
+            switch (cardValue) {
                 case 5:
                     // TODO: Add "glass" card
                     System.out.println("Glass card played");
@@ -190,12 +187,12 @@ public class Lebowski {
                     return true;
                 case 8:
                     // TODO: Skip next player for as many of the cards played
-                    nextTurn();
                     System.out.println("Skip card played");
+                    nextTurn();
                     return true;
                 case 10:
-                    // TODO: Burn discard pile
                     System.out.println("Burn card played");
+                    discardPile.clearPile();
                     return true;
                 case 12:
                     // QUEEN
@@ -207,6 +204,9 @@ public class Lebowski {
                     // ANY OTHER CARD
                     return true;
             }
+        }
+        else {
+            return false;
         }
     }
 
