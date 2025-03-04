@@ -71,10 +71,13 @@ public class Lebowski {
         // Start game loop
         while (true) {
         Player currentPlayer = players.get(currentPlayerIndex); // get first random player
+
             if (currentPlayerIndex == 0) {
                 if (currentPlayer.canPlayFromInHand()){
                     System.out.println("\nYour in-hand is: " + currentPlayer.showInHand());
+
                     Card cardSelected = null;
+
                     while (cardSelected == null) {
                         System.out.println("Which card would you like to play?");
                         String cardString = input.next().trim(); // removes spacing in input
@@ -82,6 +85,7 @@ public class Lebowski {
                             System.out.println(RED + "EXITING..." + RESET);
                             System.exit(0);
                         }
+
                         cardSelected = currentPlayer.getCardFromHand(cardString, currentPlayer.inHand);
                         if (cardSelected == null) {
                             System.out.println(RED + "Please enter a valid card from your hand." + RESET);
@@ -89,7 +93,8 @@ public class Lebowski {
                     }
 
                     int cardRank = cardSelected.getValue();
-                    if (currentPlayer.getNumRankedCards(currentPlayer.inHand, cardRank) > 1) {
+                    int numRankedCards = currentPlayer.getNumRankedCards(currentPlayer.inHand, cardRank);
+                    if (numRankedCards > 1) {
                         System.out.println(YELLOW + "Multiple cards of rank " + cardRank + " found" + RESET);
                         // TODO: Ask user how many they want to play from that rank
                     }
@@ -98,7 +103,6 @@ public class Lebowski {
 
                     if (checkValidPlay(cardSelected, discardPile)) {
                         currentPlayer.playFromHand(cardSelected, currentPlayer.inHand);
-                        discardPile.addCard(cardSelected); // add played card on top of the discard pile
                         System.out.println(discardPile);
                     } else {
                         System.out.println(RED + "Must play a card of higher rank!" + RESET);
@@ -106,6 +110,7 @@ public class Lebowski {
                         for (int i = 0; i <= discardPile.getPileSize(); i++){
                             currentPlayer.inHand.add(discardPile.removeCard());
                         }
+                            discardPile.clearPile();
                             System.out.println(YELLOW + "Discard pile emptied" + RESET);
                     }
 
@@ -127,7 +132,6 @@ public class Lebowski {
                     System.out.println("Card selected: " + cardSelected);
                     if (checkValidPlay(cardSelected, discardPile)) {
                         currentPlayer.playFromHand(cardSelected, currentPlayer.inHand); // remove card from hand
-                        discardPile.addCard(cardSelected); // add card to top of discard pile
                         System.out.println(discardPile); // show new discard pile
                     }
                     else{
@@ -136,6 +140,7 @@ public class Lebowski {
                             currentPlayer.inHand.add(discardPile.removeCard());
                         }
                         System.out.println(YELLOW + "Discard pile emptied" + RESET);
+                        discardPile.clearPile();
                     }
 
                     // Replenish hand if necessary
@@ -173,21 +178,27 @@ public class Lebowski {
             emptyPile = true;
         }
 
-        if (cardValue == 2) return true;
+        if (cardValue == 2) {
+            discardPile.addCard(playedCard); // add card to top of discard pile
+            return true;
+        }
 
         if (emptyPile || cardValue >= discardPile.getTopCard().getValue()) {
             switch (cardValue) {
                 case 5:
                     // TODO: Add "glass" card
                     System.out.println("Glass card played");
+                    discardPile.addCard(playedCard); // add card to top of discard pile
                     return true;
                 case 7:
                     // TODO: Expect lower card from next player
                     System.out.println("Low card played");
+                    discardPile.addCard(playedCard); // add card to top of discard pile
                     return true;
                 case 8:
                     // TODO: Skip next player for as many of the cards played
                     System.out.println("Skip card played");
+                    discardPile.addCard(playedCard); // add card to top of discard pile
                     nextTurn();
                     return true;
                 case 10:
@@ -198,10 +209,12 @@ public class Lebowski {
                     // QUEEN
                     // TODO: Reverse direction for as many times as there are cards played
                     System.out.println("Reverse card played");
+                    discardPile.addCard(playedCard); // add card to top of discard pile
                     reverseDirection();
                     return true;
                 default:
                     // ANY OTHER CARD
+                    discardPile.addCard(playedCard); // add card to top of discard pile
                     return true;
             }
         }
